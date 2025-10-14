@@ -3,7 +3,6 @@ import 'package:expense_tracker/models/expense.dart';
 
 class ExpenseItem extends StatelessWidget {
   const ExpenseItem({super.key, required this.expense});
-
   final Expense expense;
 
   @override
@@ -19,9 +18,9 @@ class ExpenseItem extends StatelessWidget {
               Text('\$${expense.amount.toStringAsFixed(2)}'),
               const Spacer(),
               Row(children: [
-                const Icon(Icons.alarm),
+                Icon(categoryIcons[expense.category]),
                 const SizedBox(width: 4),
-                Text(expense.date.toString()),
+                Text(expense.formattedDate),
               ],)
             ],)
           ],
