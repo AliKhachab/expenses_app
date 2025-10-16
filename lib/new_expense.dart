@@ -20,8 +20,6 @@ class _NewExpenseState extends State<NewExpense> {
     super.dispose();
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -34,19 +32,49 @@ class _NewExpenseState extends State<NewExpense> {
             decoration: InputDecoration(label: Text("Title")),
             controller: _titleController,
           ),
-          TextField(
-            keyboardType: TextInputType.numberWithOptions(decimal: true),
-            decoration: InputDecoration(
-              prefixText: "\$ ",
-              label: Text("Amount"),
-            ),
-            controller: _amountController,
-            inputFormatters: <TextInputFormatter>[
-              FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}')),
-            ],
-          ),
           Row(
             children: [
+              Expanded(
+                child: TextField(
+                  keyboardType: TextInputType.numberWithOptions(decimal: true),
+                  decoration: InputDecoration(
+                    prefixText: "\$ ",
+                    label: Text("Amount"),
+                  ),
+                  controller: _amountController,
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.allow(
+                      RegExp(r'^\d*\.?\d{0,2}'),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 16),
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end, // Align to the right
+                  crossAxisAlignment: CrossAxisAlignment.center, // Center vertically
+                  children: [
+                    Text("Selected Date"),
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(Icons.calendar_month),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+
+          Row(
+            children: [
+              Spacer(),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text("Cancel Expense"),
+              ),
               ElevatedButton(onPressed: () {}, child: Text("Save Expense")),
             ],
           ),
