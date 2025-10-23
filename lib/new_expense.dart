@@ -75,7 +75,7 @@ class _NewExpenseState extends State<NewExpense> {
                   children: [
                     Text(_selectedDate == null
                         ? "No Date Chosen"
-                        : "Picked Date: ${formatter.format(_selectedDate!)}"), // note to self: ! means "this nullable variable isnt null, trust me", so dart wont throw potential null exceptions/errors
+                        : formatter.format(_selectedDate!)), // note to self: ! means "this nullable variable isnt null, trust me", so dart wont throw potential null exceptions/errors
                     IconButton(
                       onPressed: () {
                         _presentDatePicker();
