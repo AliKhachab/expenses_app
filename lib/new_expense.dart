@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
+
+final formatter = DateFormat.yMd();
 
 class NewExpense extends StatefulWidget {
   const NewExpense({super.key});
@@ -13,11 +16,26 @@ class NewExpense extends StatefulWidget {
 class _NewExpenseState extends State<NewExpense> {
   final _titleController = TextEditingController();
   final _amountController = TextEditingController();
+  DateTime? _selectedDate;
 
   void dispose() {
     _titleController.dispose();
     _amountController.dispose();
     super.dispose();
+  }
+
+  void _presentDatePicker() async {
+    final now = DateTime.now();
+    final firstDate = DateTime(now.year - 1, now.month, now.day);
+    final chosenDate = await showDatePicker(
+      context: context,
+      initialDate: now,
+      firstDate: firstDate,
+      lastDate: DateTime.now(),
+    );
+    setState(() {
+      _selectedDate = chosenDate;
+    });
   }
 
   @override
@@ -55,9 +73,13 @@ class _NewExpenseState extends State<NewExpense> {
                   mainAxisAlignment: MainAxisAlignment.end, // Align to the right
                   crossAxisAlignment: CrossAxisAlignment.center, // Center vertically
                   children: [
-                    Text("Selected Date"),
+                    Text(_selectedDate == null
+                        ? "No Date Chosen"
+                        : "Picked Date: ${formatter.format(_selectedDate!)}"), // note to self: ! means "this nullable variable isnt null, trust me", so dart wont throw potential null exceptions/errors
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        _presentDatePicker();
+                      },
                       icon: const Icon(Icons.calendar_month),
                     ),
                   ],
