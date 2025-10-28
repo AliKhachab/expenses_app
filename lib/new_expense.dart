@@ -18,11 +18,42 @@ class _NewExpenseState extends State<NewExpense> {
   final _titleController = TextEditingController();
   final _amountController = TextEditingController();
   DateTime? _selectedDate;
+  Category _selectedCategory = Category.leisure;
 
+  @override
   void dispose() {
     _titleController.dispose();
     _amountController.dispose();
     super.dispose();
+  }
+
+  void _showErrorDialogue(String message) {
+    showDialog(context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text("Invalid Input"),
+        content: Text(message),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(ctx);
+            },
+            child: Text("OK"),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _submitExpenseData() {
+    if (_titleController.text.trim().isEmpty) {
+      _showErrorDialogue("Please enter a valid title.");
+      return;
+    }
+    final enteredAmnt = double.tryParse(_amountController.text);
+    if (enteredAmnt == null || enteredAmnt <= 0) {
+      _showErrorDialogue("Please enter a valid amount.");
+      return;
+    }
   }
 
   void _presentDatePicker() async {
@@ -92,13 +123,20 @@ class _NewExpenseState extends State<NewExpense> {
           Row(
             children: [
               DropdownButton(
+                value: _selectedCategory,
                 items: Category.values.map(
                   (category) => DropdownMenuItem(
                     value: category,
-                    child: Text(category.name.toString()),
+                    child: Text(category.name.toUpperCase()),
                   ),
                 ).toList(),
-                onChanged: (value) {},
+                onChanged: (value) {
+                  if (value != null) {
+                    setState(() {
+                      _selectedCategory = value;
+                    });
+                  }
+                },
               ),
               const Spacer(),
               ElevatedButton(
@@ -108,7 +146,9 @@ class _NewExpenseState extends State<NewExpense> {
                 child: Text("Cancel"),
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  _submitExpenseData();
+                },
                 child: Text("Save"),
               ),
             ],
