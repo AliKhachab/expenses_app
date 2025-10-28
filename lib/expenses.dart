@@ -15,9 +15,16 @@ class Expenses extends StatefulWidget {
 class _ExpensesState extends State<Expenses> {
   void _openAddExpenseOverlay() {
     showModalBottomSheet(
-        context: context,
-        builder: (ctx) => NewExpense(),
-      );
+      context: context,
+      builder: (context) => NewExpense(onAddExpense: _addExpense),
+      isScrollControlled: true,
+    );
+  }
+
+  void _addExpense(Expense expense) {
+    setState(() {
+      _registeredExpenses.add(expense);
+    });
   }
 
   final List<Expense> _registeredExpenses = [
@@ -49,22 +56,22 @@ class _ExpensesState extends State<Expenses> {
 
   @override
   Widget build(BuildContext context) {
-      return Scaffold(
-        appBar: AppBar(
-          title: const Text("Expense Tracker"),
-          actions: [
-            IconButton(
-              onPressed: _openAddExpenseOverlay,
-              icon: const Icon(Icons.add),
-            )
-          ],
-        ),
-        body: Column(
-          children: [
-            Text("Chart"),
-            Expanded(child: ExpensesList(expenses: _registeredExpenses)),
-          ],
-        ),
-      );
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Expense Tracker"),
+        actions: [
+          IconButton(
+            onPressed: _openAddExpenseOverlay,
+            icon: const Icon(Icons.add),
+          ),
+        ],
+      ),
+      body: Column(
+        children: [
+          Text("Chart"),
+          Expanded(child: ExpensesList(expenses: _registeredExpenses)),
+        ],
+      ),
+    );
   }
 }

@@ -6,7 +6,9 @@ import 'package:expense_tracker/models/expense.dart';
 final formatter = DateFormat.yMd();
 
 class NewExpense extends StatefulWidget {
-  const NewExpense({super.key});
+  const NewExpense({super.key, required this.onAddExpense});
+
+  final void Function(Expense expense) onAddExpense;
 
   @override
   State<NewExpense> createState() {
@@ -29,13 +31,13 @@ class _NewExpenseState extends State<NewExpense> {
 
   void _showErrorDialogue(String message) {
     showDialog(context: context,
-      builder: (ctx) => AlertDialog(
+      builder: (context) => AlertDialog(
         title: Text("Invalid Input"),
         content: Text(message),
         actions: [
           TextButton(
             onPressed: () {
-              Navigator.pop(ctx);
+              Navigator.pop(context);
             },
             child: Text("OK"),
           ),
@@ -54,6 +56,21 @@ class _NewExpenseState extends State<NewExpense> {
       _showErrorDialogue("Please enter a valid amount.");
       return;
     }
+
+    if (_selectedDate == null) {
+      _showErrorDialogue("Please choose a date.");
+      return;
+    }
+
+    widget.onAddExpense(
+      Expense(
+        amount: enteredAmnt,
+        date: _selectedDate!,
+        title: _titleController.text,
+        category: _selectedCategory,
+      ),
+    );
+    Navigator.pop(context);
   }
 
   void _presentDatePicker() async {
@@ -73,7 +90,7 @@ class _NewExpenseState extends State<NewExpense> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(16.0),
+      padding: EdgeInsets.fromLTRB(16.0, 48.0, 16.0, 16.0),
       child: Column(
         children: [
           TextField(
