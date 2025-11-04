@@ -30,7 +30,7 @@ class Chart extends StatelessWidget {
       margin: const EdgeInsets.all(16),
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
       width: double.infinity,
-      height: 100,
+      height: 180, // fixed height for the chart
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
