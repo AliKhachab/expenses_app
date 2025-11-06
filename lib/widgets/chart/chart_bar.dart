@@ -12,7 +12,7 @@ class ChartBar extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 4.0),
         child: FractionallySizedBox(
-          heightFactor: 0.6,
+          heightFactor: fill,
           child: DecoratedBox(
             decoration: BoxDecoration(
               //color: isDarkMode ? Colors.tealAccent : Colors.teal,

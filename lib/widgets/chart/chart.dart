@@ -8,9 +8,12 @@ class Chart extends StatelessWidget {
   final List<Expense> expenses;
 
   List<ExpenseBucket> get buckets {
-    return Category.values.map((category) {
-      return ExpenseBucket.forCategory(expenses, category);
-    }).toList();
+    return [
+      ExpenseBucket(category: Category.food, expenses: expenses),
+      ExpenseBucket(category: Category.travel, expenses: expenses),
+      ExpenseBucket(category: Category.leisure, expenses: expenses),
+      ExpenseBucket(category: Category.work, expenses: expenses),
+    ];
   }
 
   double get maxTotalExpenses {
@@ -49,7 +52,7 @@ class Chart extends StatelessWidget {
               children: [
                 for (final bucket in buckets)
                   ChartBar(
-                    fill: maxTotalExpenses == 0 ? 0 : bucket.totalExpenses / maxTotalExpenses,
+                    fill: bucket.totalExpenses == 0 ? 0 : bucket.totalExpenses / maxTotalExpenses,
                   ),
               ],
             ),
