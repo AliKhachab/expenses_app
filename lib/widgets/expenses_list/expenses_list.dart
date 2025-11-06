@@ -15,10 +15,10 @@ class ExpensesList extends StatelessWidget {
       itemBuilder: (ctx, index) => Dismissible(
           key: ValueKey(expenses[index]),
           background: Container(
-            // margin: EdgeInsets.symmetric(
-            //   horizontal: Theme.of(context).cardTheme.margin?.horizontal ?? 0,
-            //   //vertical: Theme.of(context).cardTheme.margin?.vertical ?? 0,
-            // ),
+            margin: EdgeInsets.symmetric(
+              horizontal: Theme.of(context).cardTheme.margin?.horizontal ?? 0,
+              vertical: Theme.of(context).cardTheme.margin?.vertical ?? 0,
+            ),
             color: Theme.of(context).colorScheme.error,
           ),
           child: ExpenseItem(expense: expenses[index]),
