@@ -9,10 +9,10 @@ class Chart extends StatelessWidget {
 
   List<ExpenseBucket> get buckets {
     return [
-      ExpenseBucket(category: Category.food, expenses: expenses),
-      ExpenseBucket(category: Category.travel, expenses: expenses),
-      ExpenseBucket(category: Category.leisure, expenses: expenses),
-      ExpenseBucket(category: Category.work, expenses: expenses),
+      ExpenseBucket.forCategory(expenses, Category.food),
+      ExpenseBucket.forCategory(expenses, Category.travel),
+      ExpenseBucket.forCategory(expenses, Category.leisure),
+      ExpenseBucket.forCategory(expenses, Category.work),
     ];
   }
 
