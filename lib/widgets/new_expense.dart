@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:expense_tracker/models/expense.dart';
+import 'package:flutter/cupertino.dart';
 
 final formatter = DateFormat.yMd();
 
@@ -89,8 +90,9 @@ class _NewExpenseState extends State<NewExpense> {
 
   @override
   Widget build(BuildContext context) {
+    final keyboardSpace = MediaQuery.of(context).viewInsets.bottom; // Get the space taken by the keyboard
     return Padding(
-      padding: EdgeInsets.fromLTRB(16.0, 48.0, 16.0, 16.0),
+      padding: EdgeInsets.fromLTRB(16.0, 48.0, 16.0, keyboardSpace + 16.0), // Add padding at the bottom equal to keyboard space so that content is not hidden
       child: Column(
         children: [
           TextField(
